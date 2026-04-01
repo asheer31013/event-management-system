@@ -1,0 +1,134 @@
+{% extends 'events/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+
+<!-- EVENT DETAILS -->
+
+<div class="col-md-7">
+
+<div class="card shadow">
+
+{% if event.image %}
+<img src="{{ event.image.url }}" class="card-img-top">
+{% endif %}
+
+<div class="card-body">
+
+<h2 class="fw-bold">{{ event.title }}</h2>
+
+<p class="text-muted">{{ event.description }}</p>
+
+<hr>
+
+<p>📅 <b>Date:</b> {{ event.date }}</p>
+
+<p>📍 <b>Venue:</b> {{ event.venue }}</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REGISTRATION FORM -->
+
+<div class="col-md-5">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h4 class="fw-bold text-center mb-4">
+Register for this Event
+</h4>
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+<label class="form-label">Full Name</label>
+
+<input type="text"
+class="form-control"
+name="name"
+placeholder="Enter your name"
+required>
+
+</div>
+
+
+<div class="mb-3">
+
+<label class="form-label">Roll Number</label>
+
+<input type="text"
+class="form-control"
+name="roll_number"
+placeholder="Enter your roll number"
+required>
+
+</div>
+
+
+<button class="btn btn-success w-100">
+Register Now
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<hr class="mt-5">
+
+
+<h3 class="mb-3">Certificates</h3>
+
+{% for registration in event.registration_set.all %}
+
+<div class="mb-2">
+
+{% if registration.attended %}
+
+<a href="{% url 'download_certificate' registration.id %}"
+class="btn btn-outline-primary btn-sm">
+
+Download Certificate for {{ registration.name }}
+
+</a>
+
+{% else %}
+
+<p class="text-muted">
+{{ registration.name }} – Certificate available after attendance confirmation.
+</p>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

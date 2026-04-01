@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organizer Reports</title>
+</head>
+<body>
+
+<h1>Organizer Report Dashboard</h1>
+
+<table border="1">
+<tr>
+    <th>Event</th>
+    <th>Total Registered</th>
+    <th>Total Attended</th>
+</tr>
+
+{% for data in report_data %}
+
+<tr>
+    <td>{{ data.event.title }}</td>
+    <td>{{ data.registered }}</td>
+    <td>{{ data.attended }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+<a href="/export-report/">Download Report CSV</a>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends 'events/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+
+<div class="p-5 mb-5 text-white rounded hero-banner">
+<div class="container text-center">
+
+<h1 class="display-4 fw-bold">Discover Upcoming Tech Events</h1>
+
+<p class="lead">
+Hackathons • Workshops • Seminars • Coding Competitions
+</p>
+
+</div>
+</div>
+
+
+<h2 class="mb-4 text-center fw-bold">Upcoming Events</h2>
+
+
+<div class="row g-4">
+
+{% for event in events %}
+
+<div class="col-md-4">
+
+<div class="card event-card shadow">
+
+{% if event.image %}
+<img src="{{ event.image.url }}" class="card-img-top event-image">
+{% else %}
+<img src="{% static 'events/images/hackathon.jpg' %}" class="card-img-top event-image">
+{% endif %}
+
+<div class="card-body">
+
+<h5 class="card-title fw-bold">{{ event.title }}</h5>
+
+<p class="card-text text-muted">
+{{ event.description|truncatewords:15 }}
+</p>
+
+<p class="small text-secondary">
+📅 {{ event.date }} <br>
+📍 {{ event.venue }}
+</p>
+
+<a href="{% url 'event_detail' event.id %}" class="btn btn-primary w-100">
+Register Now
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
